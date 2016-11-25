@@ -1,0 +1,27 @@
+{
+  "name": "ddb-sample-app",
+  "version": "1.0.0",
+  "description": "Sample React app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sorenjuul/ddb-sample-app.git"
+  },
+  "keywords": [
+    "sample",
+    "app"
+  ],
+  "author": "Soren Juul",
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/sorenjuul/ddb-sample-app#readme",
+  "dependencies": {
+    "next": "^1.1.2",
+    "react-redux": "^4.4.6",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  }
+}
