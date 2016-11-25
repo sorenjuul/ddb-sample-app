@@ -15,5 +15,7 @@ To build locally
 
 To build remotely
 
-`$ npm install -g now`
-`$ now`
+```
+$ npm install -g now
+$ now
+```
