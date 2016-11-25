@@ -7,7 +7,7 @@ class Form extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            inputValue: null
+            inputValue: ''
         };
         this.onValueChanged = this.onValueChanged.bind(this);
         this.onClick = this.onClick.bind(this);
@@ -15,10 +15,15 @@ class Form extends React.Component {
 
     onValueChanged(event) {
         let value = event.currentTarget.value;
-        this.setState({
-            inputValue: value
-        });
-
+        if (value && value.length <= 10) {
+            this.setState({
+                inputValue: value
+            });
+        } else if (!value) {
+            this.setState({
+                inputValue: ''
+            });
+        }
     }
 
     onClick(event) {
@@ -31,7 +36,7 @@ class Form extends React.Component {
             <div {...row}>
                 <div {...columns(6)}>
                     <label htmlFor="valueInput">Your value</label>
-                    <input onChange={this.onValueChanged} {...fullWidth} type="text" maxLength="10" minLength="1" placeholder="One to ten characters" id="valueInput"/>
+                    <input value={this.state.inputValue} onChange={this.onValueChanged} {...fullWidth} type="text"  minLength="1" placeholder="One to ten characters" id="valueInput"/>
                     <input disabled={!this.state.inputValue} onClick={this.onClick} className={buttonStyle} type="submit" value="Submit"/>
                 </div>
             </div>
