@@ -1,36 +1,30 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 
-function goGet(endpoint, value) {
-    return fetch(endpoint + value);
+async function goGet(endpoint, value) {
+    return await fetch(endpoint + value);
 }
 
-function fetchPerson(value) {
-    return goGet('//ddb-sample-app.getsandbox.com/person/', value);
+async function fetchPerson(value) {
+    return await goGet('//ddb-sample-app.getsandbox.com/person/', value);
 }
 
-function fetchFacility(value) {
-    return goGet('//ddb-sample-app.getsandbox.com/facility/', value);
+async function fetchFacility(value) {
+    return await goGet('//ddb-sample-app.getsandbox.com/facility/', value);
 }
 
-function fetchExposure(value) {
-    return goGet('//ddb-sample-app.getsandbox.com/exposure/', value);
+async function fetchExposure(value) {
+    return await goGet('//ddb-sample-app.getsandbox.com/exposure/', value);
 }
 
 export function getResult(value) {
-
-    return function (dispatch) {
-        return fetchPerson(value).then((response) => { return response.json(); })
-            .then((values) => {
-                Promise.all([
-                    fetchFacility(values.val1).then((response) => { return response.json(); }),
-                    fetchExposure(values.val2).then((response) => { return response.json(); })
-                ]).then(
-                    (values) => {
-                        dispatch({ type: 'SUBMIT', result: values[0].val3 * values[1].val5 })
-                    }
-                );
-            })
+    return async function (dispatch) {
+        let values = await (await fetchPerson(value)).json();
+        let values2 = await Promise.all([
+            (await fetchFacility(values.val1)).json(),
+            (await fetchExposure(values.val2)).json()
+        ]);
+        dispatch({ type: 'SUBMIT', result: values2[0].val3 * values2[1].val5 });
     };
 }
 
